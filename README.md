@@ -1,0 +1,2 @@
+# AndroidDevelopersJapanBlogReader
+Jetpack Composeの勉強がてらにAndroid Developers Japan Blogを表示するアプリ
