@@ -1,0 +1,56 @@
+[versions]
+agp = "8.5.0"
+kotlin = "1.9.0"
+activityCompose = "1.9.0"
+coilCompose = "2.6.0"
+composeBom = "2024.06.00"
+coreKtx = "1.13.1"
+koin = "3.5.6"
+kotlinxSerializationBom = "1.6.3"
+lifecycle = "2.8.3"
+navigationCompose = "2.7.7"
+okhttpBom = "4.12.0"
+retrofitBom = "2.11.0"
+tikxml = "0.8.13"
+espressoCore = "3.6.1"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+
+[libraries]
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+io-coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilCompose" }
+io-koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
+jetbrains-kotlinx-serialization-bom = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-bom", version.ref = "kotlinxSerializationBom" }
+jetbrains-kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json" }
+squareup-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor" }
+squareup-okhttp-bom = { group = "com.squareup.okhttp3", name = "okhttp-bom", version.ref = "okhttpBom" }
+squareup-okhttp = { group = "com.squareup.okhttp3", name = "okhttp" }
+squareup-retrofit-bom = { group = "com.squareup.retrofit2", name = "retrofit-bom", version.ref = "retrofitBom" }
+squareup-retrofit = { group = "com.squareup.retrofit2", name = "retrofit" }
+tickaroo-tikxml-annotation = { group = "com.tickaroo.tikxml", name = "annotation", version.ref = "tikxml" }
+tickaroo-tikxml-core = { group = "com.tickaroo.tikxml", name = "core", version.ref = "tikxml" }
+tickaroo-tikxml-processor = { group = "com.tickaroo.tikxml", name = "processor", version.ref = "tikxml" }
+tickaroo-tikxml-retrofit-converter = { group = "com.tickaroo.tikxml", name = "retrofit-converter", version.ref = "tikxml" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+jetbrains-kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
