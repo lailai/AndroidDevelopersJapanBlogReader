@@ -16,14 +16,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.pulltorefresh.PullToRefreshState
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
@@ -46,9 +45,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidDevelopersJapanBlogReaderTheme {
-                val pullToRefreshState = rememberPullToRefreshState()
+                val snackbarHostState = remember { SnackbarHostState() }
                 Scaffold(
-                    modifier = Modifier.nestedScroll(pullToRefreshState.nestedScrollConnection),
                     topBar = {
                         CenterAlignedTopAppBar(title = { Text(text = "TopAppBar") })
                     },
@@ -72,10 +70,11 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                         }
-                    }
+                    },
+                    snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
                 ) { innerPadding ->
                     MyApp(
-                        pullToRefreshState = pullToRefreshState,
+                        snackbarHostState = snackbarHostState,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -87,7 +86,7 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyApp(
-    pullToRefreshState: PullToRefreshState,
+    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier
 ) {
     val navController = rememberNavController()
@@ -100,11 +99,11 @@ fun MyApp(
             route = BlogList.toString()
         ) {
             BlogListScreen(
-                pullToRefreshState = pullToRefreshState,
                 onNavigateToBlogDetail = { link ->
                     val encodedUrl = URLEncoder.encode(link, StandardCharsets.UTF_8.toString())
                     navController.navigate(route = "${BlogDetail}/$encodedUrl")
-                }
+                },
+                snackbarHostState = snackbarHostState
             )
         }
         composable(
@@ -119,7 +118,6 @@ fun MyApp(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Preview(
     device = Devices.PIXEL,
     showSystemUi = true,

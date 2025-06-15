@@ -1,6 +1,7 @@
 package net.lailai.android.android_developers_japan_blog_reader.ui.list
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,20 +9,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
-import androidx.compose.material3.pulltorefresh.PullToRefreshState
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import net.lailai.android.android_developers_japan_blog_reader.MainViewModel
 import net.lailai.android.android_developers_japan_blog_reader.ui.theme.AndroidDevelopersJapanBlogReaderTheme
@@ -33,36 +32,47 @@ import java.util.Date
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BlogListScreen(
-    pullToRefreshState: PullToRefreshState,
     onNavigateToBlogDetail: (String) -> Unit,
+    snackbarHostState: SnackbarHostState,
     viewModel: MainViewModel = koinViewModel(),
     // 状態ホルダーとやらを採用してみる
     state: BlogListScreenStateHolder = rememberBlogListScreenState(
-        loadingState = viewModel.loadingState
+        loadingState = viewModel.loadingState.collectAsStateWithLifecycle(),
+        data = viewModel.data.collectAsStateWithLifecycle()
     )
 ) {
+    LaunchedEffect(Unit) {
+        viewModel.getBlogList()
+    }
+
     val scope = rememberCoroutineScope()
-    // if文の条件式の順番を変えるだけで一覧更新が動かなくなるのが全く分からなかった
-    if (pullToRefreshState.isRefreshing || state.shouldRefresh) {
+    PullToRefreshBox(
+        isRefreshing = state.isRefreshing,
+        onRefresh = {
+            scope.launch {
+                viewModel.getBlogList()
+            }
+        },
+        modifier = Modifier
+    ) {
+        BlogListScreen(
+            state.data,
+            onNavigateToBlogDetail
+        )
+    }
+
+    if (!state.isSuccess && state.errorMessage != null) {
         scope.launch {
-            viewModel.getBlogList()
-            pullToRefreshState.endRefresh()
+            // エラー表示
+            snackbarHostState.showSnackbar(state.errorMessage.orEmpty())
         }
     }
-    BlogListScreen(
-        viewModel.data.collectAsStateWithLifecycle(),
-        pullToRefreshState,
-        onNavigateToBlogDetail
-    )
 }
 
 // ViewModelを引数に入れるとPreviewが動作しなくなるので分離
-@OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun BlogListScreen(
     data: State<BlogListData>,
-    pullToRefreshState: PullToRefreshState = rememberPullToRefreshState(),
     onNavigateToBlogDetail: (String) -> Unit = {}
 ) {
     Box {
@@ -76,21 +86,17 @@ fun BlogListScreen(
                 HorizontalDivider()
             }
         }
-        PullToRefreshContainer(
-            modifier = Modifier.align(Alignment.TopCenter),
-            state = pullToRefreshState
-        )
     }
 }
 
 @Composable
 private fun rememberBlogListScreenState(
-    loadingState: StateFlow<LoadingState>
+    loadingState: State<LoadingState>,
+    data: State<BlogListData>
 ): BlogListScreenStateHolder = remember(loadingState) {
-    BlogListScreenStateHolder(loadingState)
+    BlogListScreenStateHolder(loadingState, data)
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Preview(
     device = Devices.PIXEL,
     showSystemUi = false,

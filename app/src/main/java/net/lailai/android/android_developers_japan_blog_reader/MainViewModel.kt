@@ -1,6 +1,7 @@
 package net.lailai.android.android_developers_japan_blog_reader
 
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import net.lailai.android.android_developers_japan_blog_reader.data.repository.BlogRepository
@@ -18,6 +19,8 @@ class MainViewModel(
 
     suspend fun getBlogList() {
         _loadingState.value = LoadingState.Processing
+        // 機内モードなどで通信処理が走る前に失敗すると状態が反映されないまま次の状態に遷移したりするのでわずかに間を入れる
+        delay(100L)
         repository.requestRss().fold(
             onSuccess = { feed ->
                 val entryList = feed.entries.map { entry ->
