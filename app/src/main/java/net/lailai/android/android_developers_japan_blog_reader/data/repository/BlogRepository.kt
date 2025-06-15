@@ -7,15 +7,20 @@ import net.lailai.android.android_developers_japan_blog_reader.data.entity.rss.F
 class BlogRepository(private val service: BlogService) {
     suspend fun requestRss(): Result<Feed> {
         Log.d(TAG, "[requestRss]")
-        val rssResponse = service.getRss()
-        if (rssResponse.isSuccessful) {
-            val feed = rssResponse.body()!!
-            Log.d(TAG, "[requestRss] feed=$feed")
-            return Result.success(feed)
-        } else {
-            val errorMessage = rssResponse.errorBody()?.string()
-            Log.e(TAG, "[requestRss] errorMessage=$errorMessage")
-            return Result.failure(Exception(errorMessage))
+        return try {
+            val rssResponse = service.getRss()
+            if (rssResponse.isSuccessful) {
+                val feed = rssResponse.body()!!
+                Log.d(TAG, "[requestRss] feed=$feed")
+                Result.success(feed)
+            } else {
+                val errorMessage = rssResponse.errorBody()?.string()
+                throw Exception(errorMessage)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "[requestRss] failed")
+            Log.e(TAG, "[requestRss] errorMessage=${e.localizedMessage}")
+            Result.failure(e)
         }
     }
 

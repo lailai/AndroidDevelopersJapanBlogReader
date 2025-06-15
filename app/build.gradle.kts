@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.compose.compiler)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.jetbrains.kotlin.kapt)
     alias(libs.plugins.jetbrains.kotlin.plugin.serialization)
@@ -7,12 +8,12 @@ plugins {
 
 android {
     namespace = "net.lailai.android.android_developers_japan_blog_reader"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "net.lailai.android.android_developers_japan_blog_reader"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -41,9 +42,6 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -67,9 +65,8 @@ dependencies {
     implementation(libs.io.coil.compose)
     implementation(libs.io.koin.androidx.compose)
     implementation(platform(libs.jetbrains.kotlinx.serialization.bom))
-    implementation(libs.jetbrains.kotlinx.serialization.json)
+    implementation(libs.jetbrains.kotlinx.serialization.core)
     implementation(platform(libs.squareup.okhttp.bom))
-    implementation(libs.squareup.okhttp)
     implementation(libs.squareup.logging.interceptor)
     implementation(platform(libs.squareup.retrofit.bom))
     implementation(libs.squareup.retrofit)
@@ -78,7 +75,7 @@ dependencies {
     implementation(libs.tickaroo.tikxml.retrofit.converter)
     kapt(libs.tickaroo.tikxml.processor)
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.junit.ktx)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
