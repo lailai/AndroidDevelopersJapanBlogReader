@@ -1,13 +1,14 @@
 package net.lailai.android.android_developers_japan_blog_reader.data.entity.rss
 
-import com.tickaroo.tikxml.annotation.Element
-import com.tickaroo.tikxml.annotation.PropertyElement
-import com.tickaroo.tikxml.annotation.Xml
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
-@Xml
+@JacksonXmlRootElement(localName = "feed")
 data class Feed(
-    @PropertyElement(name = "title")
+    @JacksonXmlProperty(localName = "title")
     val title: String,
-    @Element(name = "entry")
+    @JacksonXmlElementWrapper(localName = "entry", useWrapping = false)
+    @JacksonXmlProperty(localName = "entry")
     val entries: List<Entry>
 )

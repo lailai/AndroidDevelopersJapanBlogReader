@@ -9,9 +9,11 @@ koin = "4.1.0"
 kotlinxSerializationBom = "1.8.1"
 lifecycle = "2.9.1"
 navigationCompose = "2.9.0"
+jacksonDataformatXml = "2.19.0"
 okhttpBom = "4.12.0"
 retrofitBom = "3.0.0"
-tikxml = "0.8.13"
+staxApi = "1.0-2"
+woodstoxCore = "7.1.1"
 espressoCore = "3.6.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -30,18 +32,18 @@ androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-io-coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilCompose" }
-io-koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilCompose" }
+fasterxml-jackson-dataformat-xml = { group = "com.fasterxml.jackson.dataformat", name = "jackson-dataformat-xml", version.ref = "jacksonDataformatXml" }
+fasterxml-jackson-module-kotlin = { group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version.ref = "jacksonDataformatXml" }
+fasterxml-woodstox-core = { group = "com.fasterxml.woodstox", name = "woodstox-core", version.ref = "woodstoxCore" }
+insert-koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
+javax-stax-api = { group = "javax.xml.stream", name = "stax-api", version.ref = "staxApi" }
 jetbrains-kotlinx-serialization-bom = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-bom", version.ref = "kotlinxSerializationBom" }
 jetbrains-kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core" }
 squareup-okhttp-bom = { group = "com.squareup.okhttp3", name = "okhttp-bom", version.ref = "okhttpBom" }
 squareup-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor" }
 squareup-retrofit-bom = { group = "com.squareup.retrofit2", name = "retrofit-bom", version.ref = "retrofitBom" }
 squareup-retrofit = { group = "com.squareup.retrofit2", name = "retrofit" }
-tickaroo-tikxml-annotation = { group = "com.tickaroo.tikxml", name = "annotation", version.ref = "tikxml" }
-tickaroo-tikxml-core = { group = "com.tickaroo.tikxml", name = "core", version.ref = "tikxml" }
-tickaroo-tikxml-processor = { group = "com.tickaroo.tikxml", name = "processor", version.ref = "tikxml" }
-tickaroo-tikxml-retrofit-converter = { group = "com.tickaroo.tikxml", name = "retrofit-converter", version.ref = "tikxml" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitVersion" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
@@ -52,5 +54,4 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 jetbrains-kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
