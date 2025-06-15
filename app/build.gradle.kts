@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.compose.compiler)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.jetbrains.kotlin.kapt)
     alias(libs.plugins.jetbrains.kotlin.plugin.serialization)
 }
 
@@ -32,12 +31,8 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
+    kotlin {
+        jvmToolchain(17)
     }
     buildFeatures {
         compose = true
@@ -62,18 +57,18 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.io.coil.compose)
-    implementation(libs.io.koin.androidx.compose)
+    implementation(libs.coil.compose)
+    implementation(libs.fasterxml.jackson.dataformat.xml)
+    implementation(libs.fasterxml.jackson.module.kotlin)
+    implementation(libs.fasterxml.woodstox.core)
+    implementation(libs.insert.koin.androidx.compose)
+    implementation(libs.javax.stax.api)
     implementation(platform(libs.jetbrains.kotlinx.serialization.bom))
     implementation(libs.jetbrains.kotlinx.serialization.core)
     implementation(platform(libs.squareup.okhttp.bom))
     implementation(libs.squareup.logging.interceptor)
     implementation(platform(libs.squareup.retrofit.bom))
     implementation(libs.squareup.retrofit)
-    implementation(libs.tickaroo.tikxml.annotation)
-    implementation(libs.tickaroo.tikxml.core)
-    implementation(libs.tickaroo.tikxml.retrofit.converter)
-    kapt(libs.tickaroo.tikxml.processor)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit.ktx)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -1,15 +1,19 @@
 package net.lailai.android.android_developers_japan_blog_reader.data.entity.rss
 
-import com.tickaroo.tikxml.annotation.Element
-import com.tickaroo.tikxml.annotation.PropertyElement
-import com.tickaroo.tikxml.annotation.Xml
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import java.util.Date
 
-@Xml
 data class Entry(
-    @PropertyElement(name = "id") val id: String,
-    @PropertyElement(name = "updated") val updated: Date,
-    @PropertyElement(name = "title") val title: String,
-    @Element(name = "link") val links: List<Link>,
-    @Element(name = "media:thumbnail") val media: Media?
+    @JacksonXmlProperty(localName = "id")
+    val id: String,
+    @JacksonXmlProperty(localName = "updated")
+    val updated: Date,
+    @JacksonXmlProperty(localName = "title")
+    val title: String,
+    @JacksonXmlElementWrapper(localName = "link", useWrapping = false)
+    @JacksonXmlProperty(localName = "link")
+    val links: List<Link>,
+    @JacksonXmlProperty(namespace = "http://search.yahoo.com/mrss/", localName = "thumbnail")
+    val media: Media?
 )

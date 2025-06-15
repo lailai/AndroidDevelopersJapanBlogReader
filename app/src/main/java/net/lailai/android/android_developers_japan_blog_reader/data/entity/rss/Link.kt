@@ -1,12 +1,14 @@
 package net.lailai.android.android_developers_japan_blog_reader.data.entity.rss
 
-import com.tickaroo.tikxml.annotation.Attribute
-import com.tickaroo.tikxml.annotation.Xml
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 
-@Xml
 data class Link(
-    @Attribute(name = "href") val href: String,
-    @Attribute(name = "rel") val rel: String,
-    @Attribute(name = "title") val title: String?,
-    @Attribute(name = "type") val type: String
+    @JacksonXmlProperty(localName = "href")
+    val href: String,
+    @JacksonXmlProperty(localName = "rel")
+    val rel: String,
+    @JacksonXmlProperty(localName = "title")
+    val title: String?,
+    @JacksonXmlProperty(localName = "type")
+    val type: String
 )
