@@ -42,11 +42,6 @@ Jetpack Compose の勉強がてらに Android Developers Japan Blog を表示す
 Android Studio の新規プロジェクトで自動で入ったもの以外のライブラリを記載
 
 ### プラグイン
-- org.jetbrains.kotlin.kapt
-  - [kapt (Kotlin Annotation Processing Tool)](https://kotlinlang.org/docs/kapt.html) はアノテーションを利用して自動コードが生成できる
-  - Java でいうところの Annotation Processor と同じ
-  - 本プロジェクトでは RSS 解析で XML の読み取りをしており、 data class へのコンバーターを利用するために設定
-  - もっと高速の [ksp (Kotlin Symbol Processing)](https://kotlinlang.org/docs/ksp-overview.html) があるが本プロジェクトで利用したいライブラリでは未対応だったので kapt を採用
 - org.jetbrains.kotlin.plugin.serialization
   - テキストからオブジェクトへの変換、またはその逆をしてくれる
   - 本プロジェクトでは Navigation で画面遷移で引数を渡すために利用している
@@ -75,12 +70,12 @@ Android Studio の新規プロジェクトで自動で入ったもの以外の�
   - 言わずとしれた [HTTP クライアント](https://square.github.io/okhttp/) とログ出力用の Interceptor
 - com.squareup.retrofit2:retrofit
   - 言わずとしれた [HTTP API を利用するためのライブラリ](https://square.github.io/retrofit/)
-- com.tickaroo.tikxml:core
-- com.tickaroo.tikxml:annotation
-- com.tickaroo.tikxml:retrofit-converter
-- com.tickaroo.tikxml:processor
-  - [XML 解析用ライブラリ](https://github.com/Tickaroo/tikxml)
+- com.fasterxml.jackson.dataformat:jackson-dataformat-xml
+- com.fasterxml.jackson.module:jackson-module-kotlin
+- com.fasterxml.woodstox:woodstox-core
+- javax.xml.stream:stax-api
+  - [XML 解析用ライブラリ](https://github.com/FasterXML/jackson-dataformat-xml)
   - 本当は retrofit 謹製のコンバータ (com.squareup.retrofit2:converter-simplexml) を利用したかったが非推奨になってしまっていた
   - ドキュメントには別のコンバータ (com.squareup.retrofit2:converter-jaxb) を利用するように書かれていた
   - そちらのドキュメントを見ると Android には非対応とのこと
-  - retrofit のコンバータとして設定できる tikxml を採用 (バージョン 0.8.15 は罠)
+  - Jackson Dataformat XML でマッピングしてそれを Retrofit のコンバータにセットするようにした
