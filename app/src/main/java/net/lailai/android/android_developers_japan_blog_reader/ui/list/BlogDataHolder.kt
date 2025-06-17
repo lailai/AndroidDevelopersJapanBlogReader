@@ -1,24 +1,26 @@
-package net.lailai.android.android_developers_japan_blog_reader
+package net.lailai.android.android_developers_japan_blog_reader.ui.list
 
-import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import net.lailai.android.android_developers_japan_blog_reader.data.repository.BlogRepository
-import net.lailai.android.android_developers_japan_blog_reader.ui.list.LoadingState
 import net.lailai.android.android_developers_japan_blog_reader.usecase.param.BlogListData
 
-class MainViewModel(
+class BlogDataHolder(
     private val repository: BlogRepository
-) : ViewModel() {
-    private val _data = MutableStateFlow(BlogListData(listOf()))
-    val data = _data.asStateFlow()
+) {
+    val isDoneFirstLoaded: StateFlow<Boolean>
+        field = MutableStateFlow<Boolean>(false)
 
-    private val _loadingState = MutableStateFlow<LoadingState>(LoadingState.None)
-    val loadingState = _loadingState.asStateFlow()
+    val loadingState: StateFlow<LoadingState>
+        field = MutableStateFlow<LoadingState>(LoadingState.None)
+
+    val data: StateFlow<BlogListData>
+        field = MutableStateFlow<BlogListData>(BlogListData(listOf()))
 
     suspend fun getBlogList() {
-        _loadingState.value = LoadingState.Processing
+        isDoneFirstLoaded.value = true
+        loadingState.value = LoadingState.Processing
         // 機内モードなどで通信処理が走る前に失敗すると状態が反映されないまま次の状態に遷移したりするのでわずかに間を入れる
         delay(100L)
         repository.requestRss().fold(
@@ -31,11 +33,11 @@ class MainViewModel(
                         entry.links.first { it.rel == "alternate" }.href
                     )
                 }
-                _data.value = BlogListData(entryList)
-                _loadingState.value = LoadingState.Success
+                data.value = BlogListData(entryList)
+                loadingState.value = LoadingState.Success
             },
             onFailure = {
-                _loadingState.value = LoadingState.Error(it.message.orEmpty())
+                loadingState.value = LoadingState.Error(it.message.orEmpty())
             }
         )
     }

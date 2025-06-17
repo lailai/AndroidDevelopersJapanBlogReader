@@ -21,7 +21,6 @@ android {
             useSupportLibrary = true
         }
     }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -33,6 +32,9 @@ android {
     }
     kotlin {
         jvmToolchain(17)
+        sourceSets.all {
+            languageSettings.enableLanguageFeature("ExplicitBackingFields")
+        }
     }
     buildFeatures {
         compose = true

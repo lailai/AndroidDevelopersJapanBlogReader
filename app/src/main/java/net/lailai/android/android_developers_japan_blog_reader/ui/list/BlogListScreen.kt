@@ -1,7 +1,6 @@
 package net.lailai.android.android_developers_japan_blog_reader.ui.list
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,10 +21,9 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
-import net.lailai.android.android_developers_japan_blog_reader.MainViewModel
 import net.lailai.android.android_developers_japan_blog_reader.ui.theme.AndroidDevelopersJapanBlogReaderTheme
 import net.lailai.android.android_developers_japan_blog_reader.usecase.param.BlogListData
-import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
 import java.util.Date
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -34,15 +32,18 @@ import java.util.Date
 fun BlogListScreen(
     onNavigateToBlogDetail: (String) -> Unit,
     snackbarHostState: SnackbarHostState,
-    viewModel: MainViewModel = koinViewModel(),
+    dataHolder: BlogDataHolder = koinInject(),
     // 状態ホルダーとやらを採用してみる
     state: BlogListScreenStateHolder = rememberBlogListScreenState(
-        loadingState = viewModel.loadingState.collectAsStateWithLifecycle(),
-        data = viewModel.data.collectAsStateWithLifecycle()
+        isDoneFirstLoadedState = dataHolder.isDoneFirstLoaded.collectAsStateWithLifecycle(),
+        loadingState = dataHolder.loadingState.collectAsStateWithLifecycle(),
+        data = dataHolder.data.collectAsStateWithLifecycle()
     )
 ) {
     LaunchedEffect(Unit) {
-        viewModel.getBlogList()
+        if (!state.isDoneFirstLoaded) {
+            dataHolder.getBlogList()
+        }
     }
 
     val scope = rememberCoroutineScope()
@@ -50,7 +51,7 @@ fun BlogListScreen(
         isRefreshing = state.isRefreshing,
         onRefresh = {
             scope.launch {
-                viewModel.getBlogList()
+                dataHolder.getBlogList()
             }
         },
         modifier = Modifier
@@ -91,10 +92,11 @@ fun BlogListScreen(
 
 @Composable
 private fun rememberBlogListScreenState(
+    isDoneFirstLoadedState: State<Boolean>,
     loadingState: State<LoadingState>,
     data: State<BlogListData>
 ): BlogListScreenStateHolder = remember(loadingState) {
-    BlogListScreenStateHolder(loadingState, data)
+    BlogListScreenStateHolder(isDoneFirstLoadedState, loadingState, data)
 }
 
 @Preview(
