@@ -6,15 +6,19 @@ import net.lailai.android.android_developers_japan_blog_reader.usecase.param.Blo
 
 @Stable
 class BlogListScreenStateHolder(
-    private val _loadingState: State<LoadingState>,
+    private val isDoneFirstLoadedState: State<Boolean>,
+    private val loadingState: State<LoadingState>,
     val data: State<BlogListData>
 ) {
+    val isDoneFirstLoaded: Boolean
+        get() = isDoneFirstLoadedState.value
+
     val isRefreshing: Boolean
-        get() = _loadingState.value is LoadingState.Processing
+        get() = loadingState.value is LoadingState.Processing
 
     val isSuccess: Boolean
-        get() = _loadingState.value is LoadingState.Success
+        get() = loadingState.value is LoadingState.Success
 
     val errorMessage: String?
-        get() = (_loadingState.value as? LoadingState.Error)?.message
+        get() = (loadingState.value as? LoadingState.Error)?.message
 }
