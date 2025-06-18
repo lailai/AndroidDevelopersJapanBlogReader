@@ -91,6 +91,6 @@ class DateConverterFactory : Converter.Factory() {
     }
 
     companion object {
-        private const val DATE_FORMAT_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSX"
+        const val DATE_FORMAT_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSX"
     }
 }
