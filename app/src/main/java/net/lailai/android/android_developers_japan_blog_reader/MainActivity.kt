@@ -20,7 +20,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
@@ -127,15 +126,11 @@ fun MyApp(
 fun BlogListPreview() {
     AndroidDevelopersJapanBlogReaderTheme {
         BlogListScreen(
-            remember {
-                mutableStateOf(
-                    BlogListData(
-                        List(10) {
-                            BlogListData.Entry("テスト", Date(), "dummy", "dummy")
-                        }
-                    )
-                )
-            }
+            BlogListData(
+                List(10) {
+                    BlogListData.Entry("id", "テスト", Date(), "dummy", "dummy")
+                }
+            )
         )
     }
 }

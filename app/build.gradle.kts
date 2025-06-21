@@ -72,7 +72,6 @@ dependencies {
     implementation(libs.fasterxml.jackson.dataformat.xml)
     implementation(libs.fasterxml.jackson.module.kotlin)
     implementation(libs.fasterxml.woodstox.core)
-    implementation(libs.insert.koin.android)
     implementation(libs.insert.koin.androidx.compose)
     implementation(libs.javax.stax.api)
     implementation(platform(libs.jetbrains.kotlinx.serialization.bom))

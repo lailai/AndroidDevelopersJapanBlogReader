@@ -4,7 +4,7 @@ import android.util.Log
 import net.lailai.android.android_developers_japan_blog_reader.data.BlogService
 import net.lailai.android.android_developers_japan_blog_reader.data.entity.rss.Feed
 
-class BlogRepository(private val service: BlogService) {
+class BlogNetworkRepository(private val service: BlogService) {
     suspend fun requestRss(): Result<Feed> {
         Log.d(TAG, "[requestRss]")
         return try {
@@ -25,6 +25,6 @@ class BlogRepository(private val service: BlogService) {
     }
 
     companion object {
-        private val TAG = BlogRepository::class.simpleName.orEmpty()
+        private val TAG = BlogNetworkRepository::class.simpleName.orEmpty()
     }
 }
