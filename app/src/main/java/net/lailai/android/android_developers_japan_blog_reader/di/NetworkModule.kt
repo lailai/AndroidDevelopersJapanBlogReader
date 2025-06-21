@@ -3,6 +3,7 @@ package net.lailai.android.android_developers_japan_blog_reader.di
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import net.lailai.android.android_developers_japan_blog_reader.BuildConfig
 import net.lailai.android.android_developers_japan_blog_reader.data.BlogService
 import net.lailai.android.android_developers_japan_blog_reader.di.NetworkModule.provideDateConverter
 import net.lailai.android.android_developers_japan_blog_reader.di.NetworkModule.provideOkHttpClient
@@ -34,7 +35,11 @@ object NetworkModule {
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
         .addNetworkInterceptor(
             HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
+                level = if (BuildConfig.DEBUG) {
+                    HttpLoggingInterceptor.Level.BODY
+                } else {
+                    HttpLoggingInterceptor.Level.NONE
+                }
             }
         )
         .build()
