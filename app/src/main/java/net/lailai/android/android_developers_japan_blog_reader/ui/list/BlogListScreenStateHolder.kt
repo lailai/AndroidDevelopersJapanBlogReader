@@ -25,17 +25,18 @@ class BlogListScreenStateHolder(
 
     suspend fun onRefresh(isForce: Boolean = false) {
         isRefreshing = true
-        useCase.execute(isForce).fold(
-            onSuccess = { blogData ->
-                isRefreshing = false
-                isSuccess = true
-                data = blogData
-            },
-            onFailure = { e ->
-                isRefreshing = false
-                isSuccess = false
-                errorMessage = e.localizedMessage
-            }
-        )
+        useCase.execute(isForce).collect { result ->
+            result.fold(
+                onSuccess = { blogData ->
+                    isSuccess = true
+                    data = blogData
+                },
+                onFailure = { e ->
+                    isSuccess = false
+                    errorMessage = e.localizedMessage
+                }
+            )
+        }
+        isRefreshing = false
     }
 }
