@@ -83,6 +83,7 @@ fun BlogListItemPreview() {
     AndroidDevelopersJapanBlogReaderTheme {
         BlogListItem(
             BlogListData.Entry(
+                "id",
                 "テストテストテストテストテストテストテストテストテストテストテストテストテスト",
                 Date(),
                 "dummy",

@@ -6,6 +6,7 @@ data class BlogListData(
     val blogList: List<Entry>
 ) {
     data class Entry(
+        val id: String,
         val title: String,
         val date: Date,
         val imageUrl: String?,

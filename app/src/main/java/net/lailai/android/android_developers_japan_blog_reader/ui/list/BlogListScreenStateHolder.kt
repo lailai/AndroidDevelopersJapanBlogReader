@@ -1,24 +1,41 @@
 package net.lailai.android.android_developers_japan_blog_reader.ui.list
 
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import net.lailai.android.android_developers_japan_blog_reader.usecase.GetBlogDataUseCase
 import net.lailai.android.android_developers_japan_blog_reader.usecase.param.BlogListData
 
 @Stable
 class BlogListScreenStateHolder(
-    private val isDoneFirstLoadedState: State<Boolean>,
-    private val loadingState: State<LoadingState>,
-    val data: State<BlogListData>
+    private val useCase: GetBlogDataUseCase
 ) {
-    val isDoneFirstLoaded: Boolean
-        get() = isDoneFirstLoadedState.value
+    var isRefreshing: Boolean by mutableStateOf(false)
+        private set
 
-    val isRefreshing: Boolean
-        get() = loadingState.value is LoadingState.Processing
+    var isSuccess: Boolean by mutableStateOf(true)
+        private set
 
-    val isSuccess: Boolean
-        get() = loadingState.value is LoadingState.Success
+    var errorMessage: String? by mutableStateOf(null)
+        private set
 
-    val errorMessage: String?
-        get() = (loadingState.value as? LoadingState.Error)?.message
+    var data: BlogListData by mutableStateOf(BlogListData(emptyList()))
+        private set
+
+    suspend fun onRefresh(isForce: Boolean = false) {
+        isRefreshing = true
+        useCase.execute(isForce).fold(
+            onSuccess = { blogData ->
+                isRefreshing = false
+                isSuccess = true
+                data = blogData
+            },
+            onFailure = { e ->
+                isRefreshing = false
+                isSuccess = false
+                errorMessage = e.localizedMessage
+            }
+        )
+    }
 }
