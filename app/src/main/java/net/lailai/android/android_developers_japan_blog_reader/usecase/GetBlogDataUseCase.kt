@@ -1,5 +1,6 @@
 package net.lailai.android.android_developers_japan_blog_reader.usecase
 
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import net.lailai.android.android_developers_japan_blog_reader.data.repository.BlogDatabaseRepository
@@ -13,12 +14,15 @@ class GetBlogDataUseCase(
     private val blogNetworkRepository: BlogNetworkRepository
 ) {
     fun execute(isForce: Boolean): Flow<Result<BlogListData>> = flow {
+        Log.d(TAG, "[execute] isForce=$isForce")
         if (!isForce) {
+            Log.d(TAG, "[execute] get cache from memory")
             val memory = blogMemoryRepository.requestBlogList()
             if (memory.isSuccess) {
                 emit(Result.success(memory.getOrNull() ?: BlogListData(emptyList())))
                 return@flow
             } else {
+                Log.d(TAG, "[execute] get cache from database")
                 val database = blogDatabaseRepository.requestBlogList()
                 if (database.isSuccess) {
                     database.getOrNull()?.let {
@@ -28,6 +32,7 @@ class GetBlogDataUseCase(
                 }
             }
         }
+        Log.d(TAG, "[execute] get data from network")
         blogNetworkRepository.requestRss().fold(
             onSuccess = { feed ->
                 val entryList = feed.entries.map { entry ->
@@ -47,5 +52,9 @@ class GetBlogDataUseCase(
                 emit(Result.failure(e))
             }
         )
+    }
+
+    companion object {
+        private val TAG = GetBlogDataUseCase::class.simpleName.orEmpty()
     }
 }

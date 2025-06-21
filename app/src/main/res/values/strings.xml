@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Android Developers Japan Blog Reader</string>
+
+    <!-- エラーメッセージ -->
+    <string name="msg_error_no_network">インターネット接続を確認してください。</string>
+    <string name="msg_error_internal_server_error">サーバーで一時的な問題が発生しました。時間をおいてお試しください。</string>
+    <string name="msg_error_unauthorized">認証に失敗しました。</string>
+    <string name="msg_error_normal">リクエストを処理できませんでした。</string>
+    <string name="msg_error_timeout">サーバーへの接続がタイムアウトしました。時間をおいてお試しください。</string>
+    <string name="msg_error_unexpected">サーバーへの接続がタイムアウトしました。時間をおいてお試しください。</string>
 </resources>

@@ -11,15 +11,12 @@ class BlogNetworkRepository(private val service: BlogService) {
             val rssResponse = service.getRss()
             if (rssResponse.isSuccessful) {
                 val feed = rssResponse.body()!!
-                Log.d(TAG, "[requestRss] feed=$feed")
                 Result.success(feed)
             } else {
                 val errorMessage = rssResponse.errorBody()?.string()
                 throw Exception(errorMessage)
             }
         } catch (e: Exception) {
-            Log.e(TAG, "[requestRss] failed")
-            Log.e(TAG, "[requestRss] errorMessage=${e.localizedMessage}")
             Result.failure(e)
         }
     }

@@ -30,7 +30,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import net.lailai.android.android_developers_japan_blog_reader.ui.detail.BlogDetailScreen
-import net.lailai.android.android_developers_japan_blog_reader.ui.list.BlogListScreen
+import net.lailai.android.android_developers_japan_blog_reader.ui.list.BlogListContent
 import net.lailai.android.android_developers_japan_blog_reader.ui.theme.AndroidDevelopersJapanBlogReaderTheme
 import net.lailai.android.android_developers_japan_blog_reader.usecase.param.BlogListData
 import java.net.URLEncoder
@@ -97,7 +97,7 @@ fun MyApp(
         composable(
             route = BlogList.toString()
         ) {
-            BlogListScreen(
+            BlogListContent(
                 onNavigateToBlogDetail = { link ->
                     val encodedUrl = URLEncoder.encode(link, StandardCharsets.UTF_8.toString())
                     navController.navigate(route = "${BlogDetail}/$encodedUrl")
@@ -125,7 +125,7 @@ fun MyApp(
 @Composable
 fun BlogListPreview() {
     AndroidDevelopersJapanBlogReaderTheme {
-        BlogListScreen(
+        BlogListContent(
             BlogListData(
                 List(10) {
                     BlogListData.Entry("id", "テスト", Date(), "dummy", "dummy")
