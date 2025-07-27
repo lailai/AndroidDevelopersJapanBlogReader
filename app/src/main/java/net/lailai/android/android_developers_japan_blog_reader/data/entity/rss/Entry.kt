@@ -5,15 +5,15 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import java.util.Date
 
 data class Entry(
-    @JacksonXmlProperty(localName = "id")
+    @param:JacksonXmlProperty(localName = "id")
     val id: String,
-    @JacksonXmlProperty(localName = "updated")
+    @param:JacksonXmlProperty(localName = "updated")
     val updated: Date,
-    @JacksonXmlProperty(localName = "title")
+    @param:JacksonXmlProperty(localName = "title")
     val title: String,
-    @JacksonXmlElementWrapper(localName = "link", useWrapping = false)
-    @JacksonXmlProperty(localName = "link")
+    @param:JacksonXmlElementWrapper(localName = "link", useWrapping = false)
+    @param:JacksonXmlProperty(localName = "link")
     val links: List<Link>,
-    @JacksonXmlProperty(namespace = "http://search.yahoo.com/mrss/", localName = "thumbnail")
+    @param:JacksonXmlProperty(namespace = "http://search.yahoo.com/mrss/", localName = "thumbnail")
     val media: Media?
 )

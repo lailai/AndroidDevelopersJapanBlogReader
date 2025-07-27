@@ -6,9 +6,9 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
 @JacksonXmlRootElement(localName = "feed")
 data class Feed(
-    @JacksonXmlProperty(localName = "title")
+    @param:JacksonXmlProperty(localName = "title")
     val title: String,
-    @JacksonXmlElementWrapper(localName = "entry", useWrapping = false)
-    @JacksonXmlProperty(localName = "entry")
+    @param:JacksonXmlElementWrapper(localName = "entry", useWrapping = false)
+    @param:JacksonXmlProperty(localName = "entry")
     val entries: List<Entry>
 )
