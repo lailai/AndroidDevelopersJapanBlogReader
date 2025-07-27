@@ -3,12 +3,12 @@ package net.lailai.android.android_developers_japan_blog_reader.data.entity.rss
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 
 data class Link(
-    @JacksonXmlProperty(localName = "href")
+    @param:JacksonXmlProperty(localName = "href")
     val href: String,
-    @JacksonXmlProperty(localName = "rel")
+    @param:JacksonXmlProperty(localName = "rel")
     val rel: String,
-    @JacksonXmlProperty(localName = "title")
+    @param:JacksonXmlProperty(localName = "title")
     val title: String?,
-    @JacksonXmlProperty(localName = "type")
+    @param:JacksonXmlProperty(localName = "type")
     val type: String
 )
